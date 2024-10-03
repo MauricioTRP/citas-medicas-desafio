@@ -59,7 +59,7 @@ export default {
       </div>
       <div class="form-group">
         <label for="motivo" :style="{ color: motivo === '' ? 'red' : 'black' }">Motivo</label>
-        <input type="text" v-model="motivo" />
+        <input id="motivo" type="text" v-model="motivo" />
       </div>
     </div>
     <div>
