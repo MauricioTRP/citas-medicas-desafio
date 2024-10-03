@@ -1,17 +1,16 @@
 import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import NewUserForm from "./NewUserForm.vue";
-import { warn } from "vue";
 
 const patientDummy = {
-  name: 'Juanito',
-  date: '2020-10-03',
-  hour: '10:00:30',
-  motive: 'Dolor estomacal',
-  severity: 'Baja'
+  paciente: 'Juanito',
+  fecha: '2020-10-03',
+  hora: '10:00:30',
+  motivo: 'Dolor estomacal',
+  gravedad: 'Baja'
 }
 
-describe('NewUserForm.vue', () => {
+describe('NewUserForm.vue',async () => {
   const wrapper = mount(NewUserForm)
   
   // Encuentra los inputs
@@ -21,18 +20,26 @@ describe('NewUserForm.vue', () => {
   const motiveInput = wrapper.find('#motivo')
   const severityInput = wrapper.find('#gravedad')
   
-  it('Podemos definir los inputs del formulario', async () => {
-    await nameInput.setValue(patientDummy.name)
-    await dateInput.setValue(patientDummy.date)
-    await hourInput.setValue(patientDummy.hour)
-    await motiveInput.setValue(patientDummy.motive)
-    await severityInput.setValue(patientDummy.severity)
+  await nameInput.setValue(patientDummy.paciente)
+  await dateInput.setValue(patientDummy.fecha)
+  await hourInput.setValue(patientDummy.hora)
+  await motiveInput.setValue(patientDummy.motivo)
+  await severityInput.setValue(patientDummy.gravedad)
+  
+  it('Podemos definir los inputs del formulario', () => {
 
-    console.log(wrapper.vm) // -> revisar si la variablede estado paciente tiene info
-    expect(wrapper.vm.paciente).toBe(patientDummy.name)
-    expect(wrapper.vm.hora).toBe(patientDummy.hour)
-    expect(wrapper.vm.fecha).toBe(patientDummy.date)
-    expect(wrapper.vm.gravedad).toBe(patientDummy.severity)
-    expect(wrapper.vm.motivo).toBe(patientDummy.motive)
+    // console.log(wrapper.vm) // -> revisar si la variablede estado paciente tiene info
+    expect(wrapper.vm.paciente).toBe(patientDummy.paciente)
+    expect(wrapper.vm.hora).toBe(patientDummy.hora)
+    expect(wrapper.vm.fecha).toBe(patientDummy.fecha)
+    expect(wrapper.vm.gravedad).toBe(patientDummy.gravedad)
+    expect(wrapper.vm.motivo).toBe(patientDummy.motivo)
+  })
+
+  it('Podemos hacer emit desde el formulario', async () => {
+    // activamos el evento submit
+    await wrapper.find('form').trigger('submit')
+
+    expect(wrapper.emitted('submit-form')[0][0]).toEqual(patientDummy)
   })
 })
