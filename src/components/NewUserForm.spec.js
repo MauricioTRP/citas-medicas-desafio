@@ -25,7 +25,6 @@ describe('NewUserForm.vue',async () => {
   await hourInput.setValue(patientDummy.hora)
   await motiveInput.setValue(patientDummy.motivo)
   await severityInput.setValue(patientDummy.gravedad)
-  
   it('Podemos definir los inputs del formulario', () => {
 
     // console.log(wrapper.vm) // -> revisar si la variablede estado paciente tiene info
